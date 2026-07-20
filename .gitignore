@@ -24,3 +24,6 @@ irregular-body-collision-2d/frames/*.bmp
 # OS cruft
 Thumbs.db
 .DS_Store
+
+# Documents not meant for the repo
+*.pdf
