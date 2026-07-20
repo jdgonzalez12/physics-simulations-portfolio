@@ -1,0 +1,26 @@
+# Compiled binaries / build artifacts
+*.exe
+*.o
+*.obj
+*.out
+*.exp
+*.lib
+*.pdb
+*.ilk
+
+# Editor/IDE leftovers
+.vscode/
+.vs/
+compile_commands.json
+
+# Jupyter / Python
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Irregular-body collision: raw frame sequence is large and regenerable
+irregular-body-collision-2d/frames/*.bmp
+
+# OS cruft
+Thumbs.db
+.DS_Store
