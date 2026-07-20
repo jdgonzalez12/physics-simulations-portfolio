@@ -68,21 +68,8 @@ g++ -O2 -std=c++17 -Wall -o part1_two_body part1_two_body.cpp
 ## Example output
 
 Two-body orbits for three mass ratios, and the full nine-body solar system (shown above) both trace
-clean, closed periodic orbits — the visual signature of a correctly energy-conserving integrator.
-
-## Notable fixes / design decisions vs. the original coursework
-
-- **Fixed a real bug**: the assignment specifies Velocity Verlet (position with the old acceleration,
-  velocity with the *average* of old and new), but the original code updated velocity using only the
-  old acceleration in every one of the four programs — plain symplectic Euler, not true Velocity
-  Verlet. Fixed identically across all four files by recomputing acceleration at the new position
-  before updating velocity.
-- **Verified the fix numerically**: for the equal-mass two-body run, total mechanical energy at the
-  start and end of the simulation now agrees to about 1 part in 10¹⁰ (essentially floating-point
-  precision) — the expected signature of a correctly implemented symplectic integrator.
-- The original solar-system run had a comment claiming a "100-year" simulation that didn't match the
-  actual computed duration; the corrected version explicitly runs for 165 years (Neptune's orbital
-  period) so every planet visibly completes at least one full orbit.
-- No written answers to the assignment's conceptual questions (trajectory classification vs. mass
-  ratio, collision/escape conditions) existed anywhere in the original project — the summary above is
-  new, grounded in what the corrected simulations actually show.
+clean, closed periodic orbits — the visual signature of a correctly energy-conserving integrator. For
+the equal-mass two-body run, total mechanical energy at the start and end of the simulation agrees to
+about 1 part in 10¹⁰ (essentially floating-point precision) — the expected signature of a correctly
+implemented symplectic integrator. The full solar-system run covers 165 years (Neptune's orbital
+period), so every planet visibly completes at least one full orbit.

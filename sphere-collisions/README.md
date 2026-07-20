@@ -29,7 +29,7 @@ the bisection *bracket* right — `H` is only real-valued (via an `asin` term) o
 bracket that extends past that domain returns NaN, which silently defeats the usual `f(a)·f(b)<0`
 sign-change check. The bracket used here is derived analytically around the closed-form root rather
 than guessed, which is what makes the search reliable without needing an ad-hoc monotonicity clamp on
-the output (see Fixes below).
+the output.
 
 Part 4 combines the same collision math with **explicit stepping under linear friction** to decay each
 ball's speed as it travels, then a **brute-force outer search** over the white ball's initial speed to
@@ -64,23 +64,3 @@ Part 3's valid range of incidence angle α was derived from the grazing-contact 
 (`α_max = asin((r1+r2)/D) ≈ 36.9°` for this setup) rather than sampled at one arbitrary angle:
 
 ![v2f vs incidence angle](data/alpha_sweep.png)
-
-## Notable fixes / design decisions vs. the original coursework
-
-- **Fixed a real bug**: Part 1 had a silent ad-hoc clamp (`if v2f > v2f_prev, then v2f = v2f_prev`)
-  papering over apparently non-monotonic results. The actual cause was an invalid bisection bracket —
-  `H(v2f)` is only real-valued on a finite domain via an `asin` term, and a bracket extending past that
-  domain returns NaN, which silently passes the usual sign-change guard. Fixed by deriving the bracket
-  analytically around the closed-form root instead of guessing one; the clamp is gone and the resulting
-  curve is naturally monotonic with zero violations.
-- **Fixed a missing result**: Part 2 computed but never printed the `m2>m1` case.
-- **A genuine physical finding, reported honestly rather than hidden**: for exact head-on incidence,
-  the `m2 > m1` case has no interior root anywhere in its valid domain — physically, a lighter sphere
-  hitting a heavier one head-on must bounce backward, which this particular reduced equation can't
-  represent at exactly zero offset/angle. Rather than forcing a fake numeric answer, this is reported
-  explicitly (both in console output and in the notebook) alongside the classical closed-form reference
-  value.
-- **Extended Part 3** from a single arbitrary incidence angle (30°) to a full sweep over the valid
-  range derived from the grazing-contact geometry.
-- **Extended Part 4** to report both the frictionless and frictional cases separately, as the
-  assignment asks, instead of only the frictional case.

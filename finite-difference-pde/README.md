@@ -66,16 +66,10 @@ Discrete-mesh evolution, 3D value surface, and a price/time heatmap for both opt
 | ![](black-scholes/data/mesh_evolution_call.png) | ![](black-scholes/data/mesh_evolution_put.png) |
 | ![](black-scholes/data/heatmap_V_call.png) | ![](black-scholes/data/heatmap_V_put.png) |
 
-### Notable fixes vs. the original coursework
-
-The original code's terminal payoff was always the **put** payoff (`max(K-S,0)`), but its boundary
-conditions were the ones for a **call** (`V(0,t)=0`, `V(S_max,t)=S_max-Ke^{-r(T-t)}`) — an internally
-inconsistent hybrid that didn't correctly solve either option type. Fixed by adding an explicit
-call/put selector that sets the payoff *and* both boundary conditions together, consistently. Verified
+The call/put selector sets the payoff *and* both boundary conditions together, consistently. Verified
 against the closed-form boundary formulas directly from the output CSVs: computed `V(S_max,t)` for the
 call run and `V(0,t)` for the put run both matched `Ke^{-r(T-t)}`/`S_max-Ke^{-r(T-t)}` to 4 decimal
-places at every sampled time step. Strike and `S_max` were also made interactive inputs, matching the
-volatility/rate/maturity prompts already in the original code.
+places at every sampled time step.
 
 ---
 
@@ -103,5 +97,4 @@ g++ -O2 -std=c++17 -Wall -o heat_equation_fd heat_equation_fd.cpp
 
 ![Heat equation evolution](heat-equation/data/heat_pcolormesh.png)
 
-The interior smoothly relaxes from 20°C toward the 100°C boundary values, with no instability — this
-part of the original code had no functional bugs, only Spanish identifiers/comments to translate.
+The interior smoothly relaxes from 20°C toward the 100°C boundary values, with no instability.

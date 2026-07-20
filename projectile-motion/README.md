@@ -30,7 +30,7 @@ integrator) — a closed-form update for position and velocity given `b`, `m`, a
 
 **Part 3** is a brute-force 2D search (defender angle × delay time) with an adaptive timestep that
 shrinks when the two projectiles are close, looking for a closest approach under 1 m — a grid search,
-not an optimizer, matching the assignment's suggested approach.
+not an optimizer.
 
 ## Files
 
@@ -62,12 +62,3 @@ Of the 10 interception cases, 9 find a valid interception with a physically sens
 distance from the base; one case (a fast, flat, nearly grazing shot at 2° elevation) has no solution
 under the 1-meter tolerance within the search bounds — a legitimate outcome, not a bug, since a very
 flat shot doesn't leave the defender's projectile enough time or airspace to close the gap.
-
-## Notable fixes / design decisions vs. the original coursework
-
-- **Fixed a missing output**: Part 1's percent-error-vs-Δt sweep, needed for the assignment's log-log
-  plot, was never actually computed — the original code only evaluated error at one fixed `Δt` and the
-  notebook had a dead cell trying to read a `error.csv` that didn't exist. Added the sweep.
-- **Fixed a workflow gap**: Part 3 originally required re-running the program interactively for each of
-  the 10 attacker configurations and reported raw collision coordinates. It now loops over all 10 cases
-  from the assignment's table internally and reports distance from the base directly.

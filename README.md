@@ -2,13 +2,10 @@
 
 Six C++/Python projects applying numerical methods to physics and quantitative-finance problems:
 root-finding, explicit and symplectic time integration, finite-difference PDE solvers, and rigid-body
-mechanics. Originally coursework for an Engineering Physics degree; rebuilt for this portfolio with
-translated/English code, several real numerical bugs fixed, and one project (`irregular-body-collision-2d`)
-completed from a non-functional state.
+mechanics.
 
 Each project is self-contained: a short, focused C++ program (or a few), a Jupyter notebook that reads
-its CSV output and produces the plots below, and a `README.md` explaining the problem, the method, and
-what was fixed or added compared to the original coursework.
+its CSV output and produces the plots below, and a `README.md` explaining the problem and the method.
 
 ## Projects
 
@@ -36,6 +33,4 @@ guessing them) shows up in every project.
 
 - Each project's `README.md` has the exact build command; all C++ code targets `g++ -std=c++17`, no
   external dependencies beyond the C++ standard library. Notebooks use pandas/matplotlib/numpy.
-- Problem statements are paraphrased in each project's README rather than reproducing the original
-  university assignment PDFs verbatim.
 - Licensed under MIT (see `LICENSE`).

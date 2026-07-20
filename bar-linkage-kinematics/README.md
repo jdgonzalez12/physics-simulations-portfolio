@@ -64,14 +64,3 @@ to low hundreds, matching the expected physical scale:
 
 Enclosed area of point A's trajectory: **31253.42 square units** (reproduced identically by the C++
 console output, `data/enclosed_area.csv`, and the notebook).
-
-## Notable fixes / design decisions vs. the original coursework
-
-- **Fixed a real numerical bug**: the finite-difference step constant used in Part 2 (`1e-6`) didn't
-  match the actual angular step used in the θ2 sweep (`4π/N ≈ 0.0126` for `N=1000`) — off by about
-  four orders of magnitude, which inflated computed velocities by roughly 10⁴× and accelerations by
-  roughly 10⁸× (values around 10⁶-10⁹ instead of the expected 10-500). Fixed by deriving the
-  finite-difference step from the same `N` used in the sweep loop, so there's a single source of
-  truth instead of two constants that have to be kept in sync by hand.
-- Part 3 originally only printed its result to the console; it now also writes `data/enclosed_area.csv`
-  so the value is reproducible without re-running and reading stdout.

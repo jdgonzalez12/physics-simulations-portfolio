@@ -6,13 +6,6 @@ motion on every impact — the same phenomenon that makes a thrown book tumble i
 
 ![Elastic collision demo](assets/elastic_collision.gif)
 
-This was originally a university assignment I did not finish in time — the write-up asked for mass-
-property extraction, collision detection, and an elastic collision response, but the code I had only
-got as far as loading a shape and moving it under gravity, with no ground collision logic at all and
-a bug that silently corrupted the moment-of-inertia calculation. I came back and finished it properly
-for this portfolio: fixed the bug, and implemented the missing collision detection, the closed-form
-collision response, and an inelastic/air-drag extension.
-
 ## Problem
 
 Represent a rigid, irregularly-shaped 2D object as a set of equal point masses on a grid (rather than
@@ -59,9 +52,9 @@ contact point's velocity with restitution `e` is:
 J = -(1 + e) v_c / (1/M + rx²/I)        Δv_y = J/M        Δω = J·rx/I
 ```
 
-`Δω = J·rx/I` is exactly the impulse–angular-momentum relation the assignment asks for, and requiring
-`v_c` to reverse with restitution `e` is algebraically equivalent to the assignment's energy-
-conservation equation when `e = 1` (perfectly elastic). This is a closed-form solution — no root-
+`Δω = J·rx/I` is exactly the impulse–angular-momentum relation for a normal impulse, and requiring
+`v_c` to reverse with restitution `e` is algebraically equivalent to the energy-conservation condition
+when `e = 1` (perfectly elastic). This is a closed-form solution — no root-
 finding or iteration needed — and it generalizes directly to Part 4 by simply lowering `e` below 1.
 Horizontal velocity is left unchanged (frictionless normal contact); after the impulse, any residual
 penetration into the ground is corrected by translating the body back out.
@@ -131,22 +124,6 @@ bounce, plus a small continuous decline from drag between bounces:
 exactly conserved — the peak bounce height decreases over time. This isn't a bug: each off-center
 impact converts some translational kinetic energy into rotational spin, and spin doesn't contribute
 to how high the center of mass bounces, even though it's still part of the conserved total energy.
-That's the whole point of the assignment, visible directly in the data:
+That's the key physical result, visible directly in the data:
 
 ![Bounce height vs time](data/bounce_height_vs_time.png)
-
-## Notable fixes / design decisions vs. the original coursework
-
-- **Fixed a real bug**: the original code computed the moment of inertia *before* the object's mass
-  was ever set (mass was assigned in `main()` after construction), so it was silently computed from
-  an uninitialized value. Fixed by passing mass into the constructor.
-- **Fixed an edge case**: the original contour-extraction loop skipped the outermost ring of grid
-  cells, so a shape touching the edge of its input grid would be silently clipped. Neighbors outside
-  the grid are now correctly treated as background instead of being skipped.
-- **The program could not run at all** in its original state — it opened a `dron.txt` that didn't
-  exist anywhere in the project. `shape.txt` is the (new) example input.
-- Implemented the entire missing physics: ground-collision detection, the closed-form collision
-  response, the inelastic/drag extension, and the coordinate-scale/spawn design needed to get a
-  legible animation — none of this existed in the original.
-- Added physics substepping after noticing the naive one-step-per-frame version leaked ~6.5% energy
-  per run in the supposedly elastic case; substepping brings that under 0.3%.
