@@ -114,7 +114,7 @@ int main() {
     Projectile p1(0, 0, 3, 3, 0.1);
 
     // Write CSV with 100 discretized trajectory points
-    writeTrajectoryCsv(p1, "data/trayectoria.csv");
+    writeTrajectoryCsv(p1, "data/trajectory_no_drag.csv");
 
     // Analytic (theoretical) values
     double hmax_real = hmax_analytic(p1);
